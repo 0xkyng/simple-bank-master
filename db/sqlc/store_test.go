@@ -25,7 +25,7 @@ func TestTransferTx(t *testing.T) {
 		go func() {
 			result, err := store.TransferTx(context.Background(), TransferTxParams{
 				FromAccountID: account1.ID,
-				ToAccountID:   account2.ID,
+				ToAcountID: account2.ID,
 				Amount:        amount,
 			})
 

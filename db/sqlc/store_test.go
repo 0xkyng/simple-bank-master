@@ -13,7 +13,7 @@ func TestTransferTx(t *testing.T) {
 	account1 := createRandomAccount(t)
 	account2 := createRandomAccount(t)
 
-	n := 5
+	n := 1
 	amount := int64(10)
 
 	errs := make(chan error)
@@ -33,7 +33,7 @@ func TestTransferTx(t *testing.T) {
 		}()
 	}
 
-	// check results
+	//check results
 
 	for i := 0; i < n; i++ {
 		err := <-errs

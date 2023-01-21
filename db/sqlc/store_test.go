@@ -13,7 +13,7 @@ func TestTransferTx(t *testing.T) {
 	account1 := createRandomAccount(t)
 	account2 := createRandomAccount(t)
 
-	n := 1
+	n := 5
 	amount := int64(10)
 
 	errs := make(chan error)
@@ -74,6 +74,23 @@ func TestTransferTx(t *testing.T) {
 
 		_, err = store.GetEntry(context.Background(), toEntry.ID)
 		require.NoError(t, err)
+
+		// Check Accounts
+		fromAccount := result.FromAccount
+		require.NotEmpty(t, fromAccount)
+		require.Equal(t, account1.ID, fromAccount.ID)
+
+		toAccount := result.ToAccount
+		require.NotEmpty(t, toAccount)
+		require.Equal(t, account2.ID, toAccount.ID)
+
+		// Check accounts balance
+		diff1 := account1.Balance - fromAccount.Balance
+		diff2 := account2.Balance - toAccount.Balance
+		require.Equal(t, diff1, diff2)
+		require.True(t, diff1 > 0)
+		require.True(t, diff1%amount == 0) // amount, 2 * amount, 3 * amount, ...
+		
 	}
 
 
